@@ -4,7 +4,7 @@ const SQL = require("sql-template-strings")
 const proj4 = require("proj4")
 require("dotenv").config()
 const app = express()
-const port = 3000
+const port = process.env.PORT || 3000
 
 proj4.defs([
   [
