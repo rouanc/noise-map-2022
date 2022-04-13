@@ -1,0 +1,57 @@
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <script src="https://cesium.com/downloads/cesiumjs/releases/1.90/Build/Cesium/Cesium.js"></script>
+    <link
+      href="https://cesium.com/downloads/cesiumjs/releases/1.80/Build/Cesium/Widgets/widgets.css"
+      rel="stylesheet"
+    />
+
+    <style>
+      #cesiumContainer {
+        position: relative;
+        width: 97%;
+        margin-left: auto;
+        margin-right: auto;
+      }
+    </style>
+    <title>中研院永續計畫 子計畫二</title>
+  </head>
+
+  <body>
+    <!-- geocoding api -->
+    <div class="input-group mb-2">
+      <input
+        id="address"
+        type="text"
+        class="form-control"
+        placeholder="請輸入地址"
+      />
+      <div class="input-group-append">
+        <button
+          class="btn btn-outline-secondary"
+          type="button"
+          onclick="getCoord()"
+        >
+          查詢
+        </button>
+      </div>
+    </div>
+
+    <select id="area" onchange="loadArea(this)">
+      <option value="default">請選擇</option>
+      <option value="central">中區</option>
+      <option value="east">東區</option>
+      <option value="south">南區</option>
+      <option value="west">西區</option>
+      <option value="north">北區</option>
+      <option value="xitun">西屯區</option>
+      <option value="nantun">南屯區</option>
+      <option value="beitun">北屯區</option>
+    </select>
+
+    <div id="cesiumContainer" style="width: 98%; height: 98%"></div>
+
+    <script src="./script.js"></script>
+  </body>
+</html>
