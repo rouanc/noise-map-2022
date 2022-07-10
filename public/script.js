@@ -1,39 +1,57 @@
+//經緯度搜尋 撈mysql的3826坐標
 function getCoord() {
-  const val = document.getElementById("address").value
-  fetch("http://geocoding.geohealth.tw/position.php", {
-    method: "POST",
-    body: new URLSearchParams({
-      addr: val,
-    }),
-  })
-    .then((res) => res.json())
-    .then((res) => {
-      console.log(res)
-      if (!res.lat || !res.lng) {
-        alert("查無此地！請重新輸入完整地址！")
-        return
-      } else {
-        fetch(
-          "./shp?" +
-            new URLSearchParams({
-              lng: res.lng,
-              lat: res.lat,
-            })
-        ).then((shpRes) => console.log(shpRes))
+  // const val = document.getElementById("address").value
+  const lng = document.getElementById("lng").value
+  const lat = document.getElementById("lat").value
 
-        viewer.camera.flyTo({
-          destination: Cesium.Cartesian3.fromDegrees(
-            res.lng,
-            res.lat - 0.008,
-            300
-          ),
-          orientation: {
-            heading: Cesium.Math.toRadians(0.0),
-            pitch: Cesium.Math.toRadians(-20.0),
-          },
-        })
-      }
+  fetch(
+    "/shp?" +
+      new URLSearchParams({
+        lng: lng,
+        lat: lat,
+      })
+  )
+    .then((shapeRes) => shapeRes.json())
+    .then((shapeRes) => {
+      console.log(shapeRes)
+      viewer.dataSources.add(Cesium.CzmlDataSource.load(shapeRes))
+
+      viewer.camera.flyTo({
+        destination: Cesium.Cartesian3.fromDegrees(lng, lat - 0.008, 300),
+        orientation: {
+          heading: Cesium.Math.toRadians(0.0),
+          pitch: Cesium.Math.toRadians(-20.0),
+        },
+      })
     })
+
+  // fetch("http://geocoding.geohealth.tw/position.php", {
+  //   method: "POST",
+  //   mode: "no-cors",
+  //   body: new URLSearchParams({
+  //     addr: val,
+  //   }),
+  // })
+  //   .then((res) => res.json())
+  //   .then((res) => {
+  //     console.log(res)
+  //     if (!res.lat || !res.lng) {
+  //       alert("查無此地！請重新輸入完整地址！")
+  //       return
+  //     } else {
+  //       viewer.camera.flyTo({
+  //         destination: Cesium.Cartesian3.fromDegrees(
+  //           res.lng,
+  //           res.lat - 0.008,
+  //           300
+  //         ),
+  //         orientation: {
+  //           heading: Cesium.Math.toRadians(0.0),
+  //           pitch: Cesium.Math.toRadians(-20.0),
+  //         },
+  //       })
+  //     }
+  //   })
 }
 
 Cesium.Ion.defaultAccessToken =
@@ -47,10 +65,10 @@ const viewer = new Cesium.Viewer("cesiumContainer", {
   selectionIndicator: true,
   shadows: false,
   showOutline: true,
-  timeline: false,
+  timeline: true,
   sceneModePicker: true,
 })
-//處理選單字串
+// //處理選單字串
 function loadArea(select) {
   console.log(select.value)
   let path
@@ -84,7 +102,7 @@ function loadArea(select) {
   }
 
   const tileset = new Cesium.Cesium3DTileset({
-    name: "taichung",
+    name: "Taipei",
     url: path,
   })
 

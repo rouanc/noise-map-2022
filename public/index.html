@@ -10,45 +10,46 @@
     <style>
       #cesiumContainer {
         position: relative;
-        width: 97%;
+        width: 99%;
         margin-left: auto;
         margin-right: auto;
       }
     </style>
-    <title>中研院永續計畫 子計畫二</title>
+    <title>中研院永續計畫 子計畫二 台北市噪音地圖</title>
   </head>
 
   <body>
     <!-- geocoding api -->
-    <div class="input-group mb-2">
-      <input
+    <div class="input-group mb-6">
+      <!-- <input
         id="address"
         type="text"
         class="form-control"
         placeholder="請輸入地址"
+      /> -->
+      <input
+        id="lng"
+        type="text"
+        class="form-control"
+        placeholder="請輸入經度"
       />
-      <div class="input-group-append">
+      <input
+        id="lat"
+        type="text"
+        class="form-control"
+        placeholder="請輸入緯度"
+      />
+      <a class="input-group-append">
         <button
+          id="btn"
           class="btn btn-outline-secondary"
           type="button"
           onclick="getCoord()"
         >
           查詢
         </button>
-      </div>
+      </a>
     </div>
-
-    <select id="area" onchange="loadArea(this)">
-      <option value="default">請選擇</option>
-      <option value="central">中區</option>
-      <option value="east">東區</option>
-      <option value="south">南區</option>
-      <option value="west">西區</option>
-      <option value="north">北區</option>
-      <option value="xitun">西屯區</option>
-      <option value="nantun">南屯區</option>
-      <option value="beitun">北屯區</option>
-    </select>
 
     <div id="cesiumContainer" style="width: 98%; height: 98%"></div>
 
